@@ -77,7 +77,7 @@ public class CarController : MonoBehaviour
         wheelCollider.GetWorldPose(out pos, out rot);
         Debug.Log(rot);
         // rotate rot by 90 degrees
-        rot *= Quaternion.Euler(0, 0, 90);
+        rot *= Quaternion.Euler(0, 90, 0);
         trans.rotation = rot;
         trans.position = pos;
     }
