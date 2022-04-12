@@ -37,7 +37,8 @@ public class CarController : MonoBehaviour
     private void GetInput()
     {
         horizontalInput = Input.GetAxis("Horizontal");
-        verticalInput = Input.GetAxis("Vertical");
+        // For some reason se vrtijo kolesa v napačno smer, zato "-"
+        verticalInput = -Input.GetAxis("Vertical");
         isBreaking = Input.GetKey(KeyCode.Space);
     }
 
@@ -75,7 +76,7 @@ public class CarController : MonoBehaviour
         Vector3 pos;
         Quaternion rot;
         wheelCollider.GetWorldPose(out pos, out rot);
-        Debug.Log(rot);
+        //Debug.Log(rot);
         // rotate rot by 90 degrees
         rot *= Quaternion.Euler(0, 90, 0);
         trans.rotation = rot;
