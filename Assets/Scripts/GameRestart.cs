@@ -20,5 +20,6 @@ public class GameRestart : MonoBehaviour
         pauseMenu.SetActive(false);
         // Reload the current scene
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        TimeHandler.instance.StartTimer();
     }
 }

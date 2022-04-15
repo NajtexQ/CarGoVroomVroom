@@ -52,6 +52,9 @@ public class CheckpointsManager : MonoBehaviour
 
     public void CheckpointReached(int checkpoint)
     {
+        if (checkpoint == 0) {
+            TimeHandler.instance.StartTimer();
+        }
         colliders[checkpoint].enabled = false;
 
         if (checkpoint + 1 == colliders.Count)
@@ -62,6 +65,7 @@ public class CheckpointsManager : MonoBehaviour
                 // TODO: End game
                 Debug.Log("Game ended");
                 pauseMenu.SetActive(true);
+                TimeHandler.instance.StopTimer();
             }
             else
             {
