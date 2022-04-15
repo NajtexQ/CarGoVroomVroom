@@ -13,7 +13,7 @@ public class CheckpointsManager : MonoBehaviour
 
     //int currentCheckpoint = 0;
 
-    int currentLap = 0;
+    public int currentLap = 0;
 
     int checkpointCount = 0;
 
@@ -53,19 +53,26 @@ public class CheckpointsManager : MonoBehaviour
     public void CheckpointReached(int checkpoint)
     {
         colliders[checkpoint].enabled = false;
-        
-        if (checkpoint+1 >= colliders.Count) {
-            currentLap++;
-            Debug.Log("Lap " + currentLap + " reached");
-        }
-        else {
-            colliders[checkpoint+1].enabled = true;
-        }
 
-        if (currentLap >= numberLaps) {
-            // TODO: End game
-            Debug.Log("Game ended");
-            pauseMenu.SetActive(true);
+        if (checkpoint + 1 == colliders.Count)
+        {
+
+            if (currentLap + 1 >= numberLaps)
+            {
+                // TODO: End game
+                Debug.Log("Game ended");
+                pauseMenu.SetActive(true);
+            }
+            else
+            {
+                colliders[0].enabled = true;
+                currentLap++;
+                Debug.Log("Lap " + currentLap + " reached");
+            }
+        }
+        else
+        {
+            colliders[checkpoint + 1].enabled = true;
         }
 
     }
