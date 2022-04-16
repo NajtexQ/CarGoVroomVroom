@@ -8,6 +8,8 @@ public class CarManager : MonoBehaviour
     public GameObject carParts;
 
     Vector3 carPartsPosition = new Vector3(-15, 0.5f, 0);
+
+    public Dictionary<string, string> selectedCarParts;
     
     Dictionary<string, string> carPartsPaths = new Dictionary<string, string>()
     {
@@ -30,39 +32,20 @@ public class CarManager : MonoBehaviour
         {"suspension", "Suspension_2_White"},
         {"wingRear", "Gray_Rear_Wing_5"},
         {"wingFront", "Black_Front_Wing_5"},
-        {"wheel", "Wheel_A"},
+        {"wheels", "Wheel_A"},
     }; 
 
     void Awake()
     {
-        //PlayerPrefs.SetString("carParts", JsonConvert.SerializeObject(defaultCarParts));
+        // Convert default car parts to json
+        string json = JsonConvert.SerializeObject(defaultCarParts);
+        PlayerPrefs.SetString("selectedCarParts", json);
 
-        // Convert default car parts to string
-        string defaultCarPartsString = JsonConvert.SerializeObject(defaultCarParts);
-        Debug.Log(defaultCarPartsString);
+        // Get selected car parts from player prefs
+        string json2 = PlayerPrefs.GetString("selectedCarParts");
+        selectedCarParts = JsonConvert.DeserializeObject<Dictionary<string, string>>(json2);
 
-
-        //string loadCarParts = JsonConvert.DeserializeObject<Dictionary<string, string>>(PlayerPrefs.GetString("carParts")).ToString();
-
-        //Debug.Log(loadCarParts);
-        
-
-        // Load car body
-        LoadCarPart("Prefabs/Body/Black_Body", carPartsPosition);
-        // Load exhaust
-        LoadCarPart("Prefabs/Exhaust/Exhaust_2", carPartsPosition);
-        // Load engine
-        LoadCarPart("Prefabs/Engine_Intake_Top/Black_Engine_Intake_top_1", carPartsPosition);
-        // Load helmet
-        LoadCarPart("Prefabs/Helmets/Helmet_9_Devil", carPartsPosition);
-        // Load suspension
-        LoadCarPart("Prefabs/Suspensions/Suspension_2_White", carPartsPosition);
-        // Load rear wing
-        LoadCarPart("Prefabs/Wing_Rear/Gray_Rear_Wing_5", carPartsPosition);
-        // Load front wing
-        LoadCarPart("Prefabs/Wing_Front/Black_Front_Wing_5", carPartsPosition);
-        // Load wheels
-        LoadCarPart("Prefabs/Wheels/Wheel_A", carPartsPosition);
+        LoadFullCar();
     }
 
     void Start()
@@ -70,10 +53,35 @@ public class CarManager : MonoBehaviour
 
     }
 
-    void LoadCarPart(string bodyName, Vector3 carPosition) {
+    void LoadCarPart(string carPath, Vector3 carPosition) {
 
-        GameObject carBody = (GameObject)Resources.Load(""+bodyName, typeof(GameObject));
+        GameObject carBody = (GameObject)Resources.Load(carPath, typeof(GameObject));
         carBody = Instantiate(carBody, carPosition, transform.rotation);
         carBody.transform.parent = carParts.transform;
+    }
+
+    string CarPathConverter(string carPart) {
+        return carPartsPaths[carPart] + selectedCarParts[carPart];
+    }
+
+    void LoadFullCar() {
+
+        // Load car body
+        LoadCarPart(CarPathConverter("body"), carPartsPosition);
+        // Load exhaust
+        LoadCarPart(CarPathConverter("exhaust"), carPartsPosition);
+        // Load engine
+        LoadCarPart(CarPathConverter("engineTop"), carPartsPosition);
+        // Load helmet
+        LoadCarPart(CarPathConverter("helmet"), carPartsPosition);
+        // Load suspension
+        LoadCarPart(CarPathConverter("suspension"), carPartsPosition);
+        // Load rear wing
+        LoadCarPart(CarPathConverter("wingRear"), carPartsPosition);
+        // Load front wing
+        LoadCarPart(CarPathConverter("wingFront"), carPartsPosition);
+        // Load wheels
+        LoadCarPart(CarPathConverter("wheels"), carPartsPosition);
+        
     }
 }
