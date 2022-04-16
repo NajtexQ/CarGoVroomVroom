@@ -52,7 +52,7 @@ public class CheckpointsManager : MonoBehaviour
 
     public void CheckpointReached(int checkpoint)
     {
-        if (checkpoint == 0) {
+        if (checkpoint == 0 && currentLap == 0) {
             TimeHandler.instance.StartTimer();
         }
         colliders[checkpoint].enabled = false;
