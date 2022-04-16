@@ -33,12 +33,24 @@ public class CarManager : MonoBehaviour
         {"wingRear", "Gray_Rear_Wing_5"},
         {"wingFront", "Black_Front_Wing_5"},
         {"wheels", "Wheel_A"},
+    };
+
+    Dictionary<string, string> testCarParts = new Dictionary<string, string>()
+    {
+        {"body", ""},
+        {"exhaust", "Exhaust_2"},
+        {"engineTop", "Black_Engine_Intake_top_1"},
+        {"helmet", "Helmet_9_Devil"},
+        {"suspension", "Suspension_2_White"},
+        {"wingRear", "Gray_Rear_Wing_5"},
+        {"wingFront", "Black_Front_Wing_5"},
+        {"wheels", "Wheel_A"},
     }; 
 
     void Awake()
     {
         // Convert default car parts to json
-        string json = JsonConvert.SerializeObject(defaultCarParts);
+        string json = JsonConvert.SerializeObject(testCarParts);
         PlayerPrefs.SetString("selectedCarParts", json);
 
         // Get selected car parts from player prefs
@@ -66,22 +78,18 @@ public class CarManager : MonoBehaviour
 
     void LoadFullCar() {
 
-        // Load car body
-        LoadCarPart(CarPathConverter("body"), carPartsPosition);
-        // Load exhaust
-        LoadCarPart(CarPathConverter("exhaust"), carPartsPosition);
-        // Load engine
-        LoadCarPart(CarPathConverter("engineTop"), carPartsPosition);
-        // Load helmet
-        LoadCarPart(CarPathConverter("helmet"), carPartsPosition);
-        // Load suspension
-        LoadCarPart(CarPathConverter("suspension"), carPartsPosition);
-        // Load rear wing
-        LoadCarPart(CarPathConverter("wingRear"), carPartsPosition);
-        // Load front wing
-        LoadCarPart(CarPathConverter("wingFront"), carPartsPosition);
-        // Load wheels
-        LoadCarPart(CarPathConverter("wheels"), carPartsPosition);
-        
+        // Loop through carPathsParts and debugLog key
+        foreach (KeyValuePair<string, string> carPart in carPartsPaths)
+        {
+            if (selectedCarParts.ContainsKey(carPart.Key) && selectedCarParts[carPart.Key] != "")
+            {
+                LoadCarPart(CarPathConverter(carPart.Key), carPartsPosition);
+            }
+            else
+            {
+                LoadCarPart(carPartsPaths[carPart.Key] + defaultCarParts[carPart.Key], carPartsPosition);
+            }
+        }
+
     }
 }
