@@ -37,7 +37,7 @@ public class CarManager : MonoBehaviour
 
     Dictionary<string, string> testCarParts = new Dictionary<string, string>()
     {
-        {"body", ""},
+        {"body", "Black_Body"},
         {"exhaust", "Exhaust_2"},
         {"engineTop", "Black_Engine_Intake_top_1"},
         {"helmet", "Helmet_9_Devil"},
@@ -70,6 +70,7 @@ public class CarManager : MonoBehaviour
         GameObject carBody = (GameObject)Resources.Load(carPath, typeof(GameObject));
         carBody = Instantiate(carBody, carPosition, transform.rotation);
         carBody.transform.parent = carParts.transform;
+        carBody.tag = "Player";
     }
 
     string CarPathConverter(string carPart) {
