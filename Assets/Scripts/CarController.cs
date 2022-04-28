@@ -14,10 +14,13 @@ public class CarController : MonoBehaviour
     public WheelCollider frontRightWheelCollider;
     public WheelCollider rearLeftWheelCollider;
     public WheelCollider rearRightWheelCollider;
-    public Transform frontLeftWheelTransform;
-    public Transform frontRightWheelTransform;
-    public Transform rearLeftWheelTransform;
-    public Transform rearRightWheelTransform;
+
+    Transform wheels;
+
+    Transform frontLeftWheelTransform;
+    Transform frontRightWheelTransform;
+    Transform rearLeftWheelTransform;
+    Transform rearRightWheelTransform;
 
     public float maxSteeringAngle = 30f;
     public float motorForce = 50f;
@@ -25,6 +28,28 @@ public class CarController : MonoBehaviour
 
     private float currentBreakForce = 0f;
 
+    void Start()
+    {
+
+        wheels = transform.Find("Parts");
+
+        // Find child transform with part of the name
+        foreach (Transform child in wheels.transform)
+        {
+            if (child.name.Contains("Wheel"))
+            {
+                wheels = child.transform;
+                Debug.Log("Found wheel");
+                Debug.Log(child.name);
+            }
+        }
+
+        frontLeftWheelTransform = wheels.transform.GetChild(0).GetChild(0);
+        frontRightWheelTransform = wheels.transform.GetChild(1).GetChild(0);
+        rearLeftWheelTransform = wheels.transform.GetChild(2).GetChild(0);
+        rearRightWheelTransform = wheels.transform.GetChild(3).GetChild(0);
+
+    }
 
     private void FixedUpdate()
     {
