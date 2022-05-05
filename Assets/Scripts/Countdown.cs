@@ -31,8 +31,10 @@ public class Countdown : MonoBehaviour
     {
 
         Debug.Log("Countdown started");
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.1f);
         Time.timeScale = 0f;
+
+        yield return new WaitForSecondsRealtime(0.5f);
 
         Debug.Log("Real Time");
 
