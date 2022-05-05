@@ -53,8 +53,6 @@ public class CarManager : MonoBehaviour
     {
         instance = this;
 
-        SaveCarParts(testCarParts);
-
         // Get selected car parts from player prefs
         string json2 = PlayerPrefs.GetString("selectedCarParts");
         selectedCarParts = JsonConvert.DeserializeObject<Dictionary<string, string>>(json2);

@@ -14,6 +14,9 @@ public class GarageManager : MonoBehaviour
     public EventSystem eventSystem;
     public GameObject partsList;
 
+    public GameObject selectBtn;
+    public Text selectBtnText;
+
     Dictionary<string, string> selectedCarParts;
 
     public Dictionary<string, string[]> allPartsList = new Dictionary<string, string[]>();
@@ -23,8 +26,7 @@ public class GarageManager : MonoBehaviour
     void Awake()
     {
 
-        string json = PlayerPrefs.GetString("selectedCarParts");
-        selectedCarParts = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
+        LoadSelectedCar();
 
         allPartsList.Add("body", PartArray("Body"));
         allPartsList.Add("exhaust", PartArray("Exhaust"));
@@ -49,6 +51,9 @@ public class GarageManager : MonoBehaviour
 
         itemName.text = firstItem.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text;
 
+        selectBtn.GetComponent<Button>().interactable = false;
+        selectBtnText.text = "Selected";
+
         CarManager.instance.LoadFullCar();
     }
 
@@ -65,6 +70,8 @@ public class GarageManager : MonoBehaviour
                 currentSelectedCategory = categoryName.text;
 
                 itemName.text = eventSystem.currentSelectedGameObject.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text;
+
+                CheckSelectBtn(itemName.text);
             }
         }
     }
@@ -104,33 +111,95 @@ public class GarageManager : MonoBehaviour
 
         Debug.Log("Index: " + index);
 
+        if (index == items.Length - 1)
+        {
+            index = 0;
+        }
+        else
+        {
+            index++;
+        }
+
+        string newItem = items[index];
+
+        Debug.Log("NewItem: " + newItem);
+
+        UpdateItem(newItem);
+
+        CheckSelectBtn(newItem);
+
     }
 
-
-    string GetKeyByValue(Dictionary<string, string> dict, string value)
+    public void PreviousItem()
     {
-        foreach (KeyValuePair<string, string> pair in dict)
+        
+        Debug.Log("PrevItem");
+
+        // Get key from ItemList.allItems by value
+        string key = "";
+        foreach (KeyValuePair<string, string> item in ItemList.allItems)
         {
-            if (pair.Value.Contains(value))
+            if (item.Value == currentSelectedCategory)
             {
-                return pair.Key;
+                key = item.Key;
             }
         }
-        return null;
+
+        Debug.Log("Key: " + key);
+
+        // Get an array of items from dictionary allPartsList by key
+        string[] items = allPartsList[key];
+        
+        Debug.Log("Items: " + items.Length);
+        Debug.Log(items[0]);
+
+        // Get index of current selected item
+        int index = 0;
+        for (int i = 0; i < items.Length; i++)
+        {
+            if (items[i] == itemName.text)
+            {
+                index = i;
+            }
+        }
+
+        Debug.Log("Index: " + index);
+
+        if (index == 0)
+        {
+            index = items.Length - 1;
+        }
+        else
+        {
+            index--;
+        }
+
+        string newItem = items[index];
+
+        Debug.Log("NewItem: " + newItem);
+
+        UpdateItem(newItem);
+
+        CheckSelectBtn(newItem);
     }
 
-    int GetCurrentID(Dictionary<string, string> dict, string key)
+    void UpdateItem(string item)
     {
-        int currentID = 0;
+        itemName.text = item;
+    }
 
-        for (int i = 0; i < dict[key].Length; i++)
+    public void CheckSelectBtn(string item)
+    {
+        if (selectedCarParts.ContainsValue(item))
         {
-            if (dict[key][i] == currentSelectedCategory[0])
-            {
-                currentID = i;
-            }
+            selectBtn.GetComponent<Button>().interactable = false;
+            selectBtnText.text = "Selected";
         }
-        return 0;
+        else
+        {
+            selectBtn.GetComponent<Button>().interactable = true;
+            selectBtnText.text = "Select";
+        }
     }
 
     public string[] PartArray(string name)
@@ -171,5 +240,36 @@ public class GarageManager : MonoBehaviour
 
         // Set item name
         itemName.text = item.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text;
+    }
+
+    public void SelectItem()
+    {
+        string key = "";
+        foreach (KeyValuePair<string, string> item in ItemList.allItems)
+        {
+            if (item.Value == currentSelectedCategory)
+            {
+                key = item.Key;
+            }
+        }
+
+        selectedCarParts[key] = itemName.text;
+
+        CheckSelectBtn(itemName.text);
+
+        SaveSelectedCar();
+        
+    }
+
+    public void LoadSelectedCar()
+    {
+        string json = PlayerPrefs.GetString("selectedCarParts");
+        selectedCarParts = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
+    }
+
+    public void SaveSelectedCar()
+    {
+        string json = JsonConvert.SerializeObject(selectedCarParts);
+        PlayerPrefs.SetString("selectedCarParts", json);
     }
 }
