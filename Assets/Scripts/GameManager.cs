@@ -7,8 +7,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        TrackRenderer.instance.LoadTrack("Track01");
-        CarManager.instance.LoadFullCar();
+        Countdown.instance.StartCountdown();
     }
 
 }

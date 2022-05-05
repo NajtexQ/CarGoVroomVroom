@@ -10,6 +10,7 @@ public class TrackRenderer : MonoBehaviour
     void Awake()
     {
         instance = this;
+        LoadTrack("Track01");
     }
 
     public void LoadTrack(string trackName)
