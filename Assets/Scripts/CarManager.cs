@@ -57,6 +57,17 @@ public class CarManager : MonoBehaviour
         string json2 = PlayerPrefs.GetString("selectedCarParts");
         selectedCarParts = JsonConvert.DeserializeObject<Dictionary<string, string>>(json2);
 
+        // If there are no selected car parts, set default car parts
+        if (selectedCarParts == null)
+        {
+            selectedCarParts = defaultCarParts;
+
+            // Save default car parts to player prefs
+            string json = JsonConvert.SerializeObject(selectedCarParts);
+            PlayerPrefs.SetString("selectedCarParts", json);
+
+        }
+
         LoadFullCar();
 
     }

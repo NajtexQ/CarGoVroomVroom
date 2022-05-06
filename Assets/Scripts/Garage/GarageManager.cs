@@ -70,8 +70,9 @@ public class GarageManager : MonoBehaviour
                 currentSelectedCategory = categoryName.text;
 
                 itemName.text = eventSystem.currentSelectedGameObject.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text;
-
                 CheckSelectBtn(itemName.text);
+
+                HandleCameras.instance.EnableCameraByName(currentSelectedCategory);
             }
         }
     }
@@ -183,7 +184,7 @@ public class GarageManager : MonoBehaviour
         CheckSelectBtn(newItem);
     }
 
-    void UpdateItem(string item)
+    void UpdateItem(string item)    
     {
         itemName.text = item;
     }
@@ -259,6 +260,11 @@ public class GarageManager : MonoBehaviour
 
         SaveSelectedCar();
         
+    }
+
+    public string ReplaceUnderScoreWithSpace(string name)
+    {
+        return name.Replace("_", " ");
     }
 
     public void LoadSelectedCar()
