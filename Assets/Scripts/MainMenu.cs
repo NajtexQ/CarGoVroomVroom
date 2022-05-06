@@ -13,6 +13,11 @@ public class MainMenu : MonoBehaviour
         instance = this;
     }
 
+    void Start()
+    {
+        Time.timeScale = 1f;
+    }
+
     public void Play()
     {
         SceneManager.LoadScene("Game");

@@ -7,7 +7,7 @@ public class GameRestart : MonoBehaviour
 {
     // Make an instance of this class
     public static GameRestart instance;
-    public GameObject pauseMenu;
+    public GameObject endMenu;
 
     void Awake()
     {
@@ -17,7 +17,8 @@ public class GameRestart : MonoBehaviour
     public void RestartGame()
     {
         Debug.Log("Restarting game...");
-        pauseMenu.SetActive(false);
+        endMenu.SetActive(false);
+        Time.timeScale = 1f;
         // Reload the current scene
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         TimeHandler.instance.StartTimer();

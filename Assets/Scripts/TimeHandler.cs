@@ -8,7 +8,8 @@ public class TimeHandler : MonoBehaviour
     public static TimeHandler instance;
     public TextMeshProUGUI timeText;
     float startTime;
-    float endTime;
+    
+    public float endTime;
 
     bool isStarted;
 

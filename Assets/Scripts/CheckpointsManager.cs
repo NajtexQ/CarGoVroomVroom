@@ -67,11 +67,9 @@ public class CheckpointsManager : MonoBehaviour
 
             if (currentLap + 1 >= numberLaps)
             {
-                // TODO: End game
-                Debug.Log("Game ended");
-                pauseMenu.SetActive(true);
-                TimeHandler.instance.StopTimer();
+                GameManager.instance.EndGame();
             }
+            
             else
             {
                 colliders[0].enabled = true;
