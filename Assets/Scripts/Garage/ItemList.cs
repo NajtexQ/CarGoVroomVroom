@@ -6,9 +6,11 @@ using Newtonsoft.Json;
 
 public class ItemList : MonoBehaviour
 { 
+    public static ItemList instance;
+
     Dictionary<string, string> selectedCarParts;
     
-    public Dictionary<string, string> allItems = new Dictionary<string, string>()
+    public static Dictionary<string, string> allItems = new Dictionary<string, string>()
     {
         {"body", "Body"},
         {"exhaust", "Exhaust"},
@@ -22,11 +24,11 @@ public class ItemList : MonoBehaviour
     
     void Awake()
     {
+        instance = this;
+
         // Get selected car parts from player prefs
         string json = PlayerPrefs.GetString("selectedCarParts");
         selectedCarParts = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
-
-        Debug.Log("selectedCarParts: " + selectedCarParts["body"]);
 
         LoadAllItems();
     }
@@ -34,8 +36,6 @@ public class ItemList : MonoBehaviour
     void LoadItem(string itemName, string itemKey)
     {
         string itemPath = "UI/Garage/ListItem";
-
-        Debug.Log("Loading item: " + itemName);
         
         GameObject item = (GameObject)Resources.Load(itemPath, typeof(GameObject));
         item = Instantiate(item, transform.position, transform.rotation);

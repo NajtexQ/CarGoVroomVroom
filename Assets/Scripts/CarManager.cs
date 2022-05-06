@@ -13,7 +13,7 @@ public class CarManager : MonoBehaviour
 
     public Dictionary<string, string> selectedCarParts;
     
-    public Dictionary<string, string> carPartsPaths = new Dictionary<string, string>()
+    public static Dictionary<string, string> carPartsPaths = new Dictionary<string, string>()
     {
         {"body", "CarParts/Body/"},
         {"exhaust", "CarParts/Exhaust/"},
@@ -53,10 +53,6 @@ public class CarManager : MonoBehaviour
     {
         instance = this;
 
-        // Convert default car parts to json
-        string json = JsonConvert.SerializeObject(testCarParts);
-        PlayerPrefs.SetString("selectedCarParts", json);
-
         // Get selected car parts from player prefs
         string json2 = PlayerPrefs.GetString("selectedCarParts");
         selectedCarParts = JsonConvert.DeserializeObject<Dictionary<string, string>>(json2);
@@ -68,6 +64,13 @@ public class CarManager : MonoBehaviour
     void Start()
     {
 
+    }
+
+    void SaveCarParts(Dictionary<string, string> carParts)
+    {
+        // Convert car parts to json
+        string json = JsonConvert.SerializeObject(carParts);
+        PlayerPrefs.SetString("selectedCarParts", json);
     }
 
     void LoadCarPart(string carPath, Vector3 carPosition) {
@@ -84,7 +87,6 @@ public class CarManager : MonoBehaviour
 
     public void LoadFullCar() {
 
-        // Loop through carPathsParts and debugLog key
         foreach (KeyValuePair<string, string> carPart in carPartsPaths)
         {
             if (selectedCarParts.ContainsKey(carPart.Key) && selectedCarParts[carPart.Key] != "")
