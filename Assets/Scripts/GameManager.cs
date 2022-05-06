@@ -48,7 +48,9 @@ public class GameManager : MonoBehaviour
         endMenu.SetActive(true);
 
         int allLaps = CheckpointsManager.instance.numberLaps;
-        float time = TimeHandler.instance.endTime;
+        string time = TimeHandler.instance.timeString;
+
+        Debug.Log("EndTime: " + time);
 
         timeText.text = "You finished " + allLaps + " laps in " + time + " seconds!";
     }

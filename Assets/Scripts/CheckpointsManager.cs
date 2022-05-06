@@ -16,7 +16,6 @@ public class CheckpointsManager : MonoBehaviour
 
     int checkpointCount = 0;
 
-    // Create instance of this class
     public static CheckpointsManager instance;
 
     void Awake()
@@ -55,9 +54,9 @@ public class CheckpointsManager : MonoBehaviour
 
     public void CheckpointReached(int checkpoint)
     {
-        if (checkpoint == 0 && currentLap == 0) {
-            TimeHandler.instance.StartTimer();
-        }
+        //if (checkpoint == 0 && currentLap == 0) {
+        //    TimeHandler.instance.StartTimer();
+        //}
         colliders[checkpoint].enabled = false;
 
         if (checkpoint + 1 == colliders.Count)
@@ -72,7 +71,6 @@ public class CheckpointsManager : MonoBehaviour
             {
                 colliders[0].enabled = true;
                 currentLap++;
-                Debug.Log("Lap " + currentLap + " reached");
             }
         }
         else

@@ -16,7 +16,7 @@ public class TrackRenderer : MonoBehaviour
         string trackName = PlayerPrefs.GetString("trackName");
 
         LoadTrack(trackName != "" ? trackName : defaultTrack);
-        LoadCheckpoints(trackName != "" ? trackName : defaultTrack);
+        //LoadCheckpoints(trackName != "" ? trackName : defaultTrack);
     }
 
     public void LoadTrack(string trackName)

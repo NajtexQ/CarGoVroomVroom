@@ -10,6 +10,7 @@ public class TimeHandler : MonoBehaviour
     float startTime;
     
     public float endTime;
+    public string timeString;
 
     bool isStarted;
 
@@ -28,7 +29,10 @@ public class TimeHandler : MonoBehaviour
     {
         // Get current time
         isStarted = false;
+        // TODO: Easy fix, but not the best solution
         endTime = Time.time - startTime;
+        timeString = timeText.text;
+        Debug.Log("Time2: " + timeString);
     }
 
     public void UpdateTimer()

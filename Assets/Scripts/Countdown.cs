@@ -55,6 +55,7 @@ public class Countdown : MonoBehaviour
 
         countdownText.text = "GO!";
         Time.timeScale = 1f;
+        TimeHandler.instance.StartTimer();
         yield return new WaitForSeconds(1f);
         countdownText.text = "";
     }
