@@ -10,8 +10,6 @@ public class CheckpointsManager : MonoBehaviour
 
     List<Collider> colliders = new List<Collider>();
 
-    public GameObject pauseMenu;
-
     //int currentCheckpoint = 0;
 
     public int currentLap = 0;
@@ -69,7 +67,7 @@ public class CheckpointsManager : MonoBehaviour
             {
                 GameManager.instance.EndGame();
             }
-            
+
             else
             {
                 colliders[0].enabled = true;
@@ -83,6 +81,5 @@ public class CheckpointsManager : MonoBehaviour
         }
 
     }
-
 
 }

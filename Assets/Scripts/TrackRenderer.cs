@@ -16,6 +16,7 @@ public class TrackRenderer : MonoBehaviour
         string trackName = PlayerPrefs.GetString("trackName");
 
         LoadTrack(trackName != "" ? trackName : defaultTrack);
+        LoadCheckpoints(trackName != "" ? trackName : defaultTrack);
     }
 
     public void LoadTrack(string trackName)
@@ -25,5 +26,13 @@ public class TrackRenderer : MonoBehaviour
         GameObject track = (GameObject)Resources.Load(trackPath, typeof(GameObject));
         track = Instantiate(track, new Vector3(0, 0, 0), Quaternion.identity);
 
+    }
+
+    public void LoadCheckpoints(string trackName)
+    {
+        string trackPath = "Tracks/Checkpoints/" + trackName;
+
+        GameObject checkpoints = (GameObject)Resources.Load(trackPath, typeof(GameObject));
+        checkpoints = Instantiate(checkpoints, new Vector3(0, 0, 0), Quaternion.identity);
     }
 }
