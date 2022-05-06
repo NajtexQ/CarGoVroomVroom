@@ -7,17 +7,15 @@ public class TrackRenderer : MonoBehaviour
     
     public static TrackRenderer instance;
 
-    string currentName = "Track01";
+    string defaultTrack = "Track01";
 
     void Awake()
     {
         instance = this;
 
-        PlayerPrefs.SetString("trackName", currentName);
-
         string trackName = PlayerPrefs.GetString("trackName");
 
-        LoadTrack(trackName);
+        LoadTrack(trackName != "" ? trackName : defaultTrack);
     }
 
     public void LoadTrack(string trackName)

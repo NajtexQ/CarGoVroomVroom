@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class CheckpointsManager : MonoBehaviour
 {
-    public int numberLaps = 3;
+    public int numberLaps;
+    public int defaultNumberLaps = 3;
     public List<GameObject> checkpoints;
 
     List<Collider> colliders = new List<Collider>();
@@ -23,6 +24,10 @@ public class CheckpointsManager : MonoBehaviour
     void Awake()
     {
         instance = this;
+
+        int selectedLaps = PlayerPrefs.GetInt("numberOfLaps", defaultNumberLaps);
+        
+        numberLaps = selectedLaps > 0 ? selectedLaps : defaultNumberLaps;
 
         foreach (GameObject checkpoint in checkpoints)
         {
