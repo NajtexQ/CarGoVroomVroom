@@ -49,12 +49,8 @@ public class GarageManager : MonoBehaviour
 
         categoryName.text = firstItem.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text;
 
-        itemName.text = firstItem.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text;
-
         selectBtn.GetComponent<Button>().interactable = false;
         selectBtnText.text = "Selected";
-
-        CarManager.instance.LoadFullCar();
     }
 
     void Update()
@@ -65,14 +61,23 @@ public class GarageManager : MonoBehaviour
             // Check if item is part of the parts list
             if (eventSystem.currentSelectedGameObject.transform.parent.name == "PartsList")
             {
-                categoryName.text = eventSystem.currentSelectedGameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text;
 
-                currentSelectedCategory = categoryName.text;
+                string currentSelectedItem = eventSystem.currentSelectedGameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text;
 
-                itemName.text = eventSystem.currentSelectedGameObject.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text;
-                CheckSelectBtn(itemName.text);
+                if (currentSelectedItem != currentSelectedCategory)
+                {
+                    CarManager.instance.UpdateFullCar();
 
-                HandleCameras.instance.EnableCameraByName(currentSelectedCategory);
+                    categoryName.text = eventSystem.currentSelectedGameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text;
+
+                    currentSelectedCategory = categoryName.text;
+
+                    itemName.text = GetCurrentItem();
+
+                    CheckSelectBtn(itemName.text);
+
+                    HandleCameras.instance.EnableCameraByName(currentSelectedCategory);
+                }
             }
         }
     }
@@ -96,9 +101,8 @@ public class GarageManager : MonoBehaviour
 
         // Get an array of items from dictionary allPartsList by key
         string[] items = allPartsList[key];
-        
-        Debug.Log("Items: " + items.Length);
-        Debug.Log(items[0]);
+
+        string oldItem = itemName.text;
 
         // Get index of current selected item
         int index = 0;
@@ -124,6 +128,18 @@ public class GarageManager : MonoBehaviour
         string newItem = items[index];
 
         Debug.Log("NewItem: " + newItem);
+
+        string categoryId = "";
+
+        foreach (KeyValuePair<string, string> item in ItemList.allItems)
+        {
+            if (item.Value == currentSelectedCategory)
+            {
+                categoryId = item.Key;
+            }
+        }
+
+        CarManager.instance.UpdateCarPart(oldItem, newItem, categoryId);
 
         UpdateItem(newItem);
 
@@ -151,8 +167,7 @@ public class GarageManager : MonoBehaviour
         // Get an array of items from dictionary allPartsList by key
         string[] items = allPartsList[key];
         
-        Debug.Log("Items: " + items.Length);
-        Debug.Log(items[0]);
+        string oldItem = itemName.text;
 
         // Get index of current selected item
         int index = 0;
@@ -178,6 +193,18 @@ public class GarageManager : MonoBehaviour
         string newItem = items[index];
 
         Debug.Log("NewItem: " + newItem);
+
+        string categoryId = "";
+
+        foreach (KeyValuePair<string, string> item in ItemList.allItems)
+        {
+            if (item.Value == currentSelectedCategory)
+            {
+                categoryId = item.Key;
+            }
+        }
+
+        CarManager.instance.UpdateCarPart(oldItem, newItem, categoryId);
 
         UpdateItem(newItem);
 
@@ -215,22 +242,6 @@ public class GarageManager : MonoBehaviour
         return partArray;
     }
 
-    public void UpdateCar() {
-
-        string partName = itemName.text;
-        
-        // Delete old car part and load new one
-        GameObject oldPart = GameObject.Find(partName + "(Clone)");
-        Destroy(oldPart);
-
-        GameObject newPart = Instantiate(Resources.Load<GameObject>("CarParts/Body/" + partName));
-        newPart.name = partName;
-        newPart.transform.SetParent(GameObject.Find("Car").transform);
-        newPart.transform.localPosition = Vector3.zero;
-        newPart.transform.localRotation = Quaternion.identity;
-    }
-
-
     public void ChangeCategory(GameObject item)
     {
         // Set selected item as selected
@@ -239,8 +250,6 @@ public class GarageManager : MonoBehaviour
         // Set category name
         categoryName.text = item.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text;
 
-        // Set item name
-        itemName.text = item.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text;
     }
 
     public void SelectItem()
@@ -259,7 +268,25 @@ public class GarageManager : MonoBehaviour
         CheckSelectBtn(itemName.text);
 
         SaveSelectedCar();
+        LoadSelectedCar();
         
+    }
+
+    public string GetCurrentItem()
+    {
+        string key = "";
+        foreach (KeyValuePair<string, string> item in ItemList.allItems)
+        {
+            if (item.Value == currentSelectedCategory)
+            {
+                key = item.Key;
+            }
+        }
+
+        Debug.Log("Key: " + key);
+        Debug.Log("Item: " + selectedCarParts[key]);
+
+        return selectedCarParts[key];
     }
 
     public string ReplaceUnderScoreWithSpace(string name)

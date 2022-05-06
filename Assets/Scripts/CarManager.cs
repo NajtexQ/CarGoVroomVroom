@@ -92,6 +92,38 @@ public class CarManager : MonoBehaviour
         carBody.tag = "Player";
     }
 
+    public void UpdateCarPart(string oldName, string newName, string category) {
+
+        Debug.Log("Updating car part: " + oldName + " to " + newName);
+        
+        // Find old car part object inside car parts object
+        GameObject oldPart = carParts.transform.Find(oldName + "(Clone)").gameObject;
+        Destroy(oldPart);
+
+        Debug.Log("Part deleted: " + oldName);
+
+        Debug.Log("Category: " + category);
+
+        Vector3 position = new Vector3(carPartsPosition.x, 0, carPartsPosition.z);
+        
+        // Load new car part
+        LoadCarPart(carPartsPaths[category] + newName, position);
+    }
+
+    public void UpdateFullCar() {
+
+        LoadSelectedCar();
+
+        // Delete all car parts
+        foreach (Transform child in carParts.transform)
+        {
+            Destroy(child.gameObject);
+        }
+
+        // Load new car parts
+        LoadFullCar();
+    }
+
     string CarPathConverter(string carPart) {
         return carPartsPaths[carPart] + selectedCarParts[carPart];
     }
@@ -110,5 +142,12 @@ public class CarManager : MonoBehaviour
             }
         }
 
-    } 
+    }
+
+    public void LoadSelectedCar()
+    {
+        string json = PlayerPrefs.GetString("selectedCarParts");
+        selectedCarParts = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
+    }
+
 }

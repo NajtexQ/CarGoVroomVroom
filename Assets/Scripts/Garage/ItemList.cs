@@ -48,8 +48,8 @@ public class ItemList : MonoBehaviour
         itemText.text = itemName;
 
         // Get second child text component
-        TextMeshProUGUI itemText2 = item.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
-        itemText2.text = selectedCarParts[itemKey];
+        //TextMeshProUGUI itemText2 = item.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+        //itemText2.text = selectedCarParts[itemKey];
     }
 
     void LoadAllItems() 
