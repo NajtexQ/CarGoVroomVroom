@@ -468,6 +468,58 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 90905439}
   m_CullTransparentMesh: 1
+--- !u!1 &113807541
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 113807543}
+  - component: {fileID: 113807542}
+  m_Layer: 0
+  m_Name: Audio Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &113807542
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 113807541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9891e703e1a94c54188733d63de124e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: EngineStart
+    clip: {fileID: 8300000, guid: 3d701d49f8075e34d83c457e933923dc, type: 3}
+    group: {fileID: 1730813836125147108, guid: 0cd228daeddc1c94fb81f98a0d9445ec, type: 2}
+    volume: 0.5
+    pitch: 1.49
+    loop: 0
+    mute: 0
+    source: {fileID: 0}
+--- !u!4 &113807543
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 113807541}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 832.64703, y: 499.32312, z: -59.41235}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &195171588
 GameObject:
   m_ObjectHideFlags: 0
@@ -3013,6 +3065,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeText: {fileID: 1072267681}
   endTime: 0
+  timeString: 
 --- !u!114 &1236286712
 MonoBehaviour:
   m_ObjectHideFlags: 0

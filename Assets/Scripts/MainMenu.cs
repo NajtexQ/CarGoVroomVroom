@@ -11,6 +11,8 @@ public class MainMenu : MonoBehaviour
     void Awake()
     {
         instance = this;
+        AudioManager.instance.Play("Music");
+        Debug.Log("Music started");
     }
 
     void Start()
