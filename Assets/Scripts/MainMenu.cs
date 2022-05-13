@@ -11,12 +11,12 @@ public class MainMenu : MonoBehaviour
     void Awake()
     {
         instance = this;
-        AudioManager.instance.Play("Music");
         Debug.Log("Music started");
     }
 
     void Start()
     {
+        AudioManager.instance.Play("Music");
         Time.timeScale = 1f;
     }
 

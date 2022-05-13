@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         Time.timeScale = 1f;
+        StartCoroutine(EngineSound());
         Countdown.instance.StartCountdown();
     }
 
@@ -43,6 +44,8 @@ public class GameManager : MonoBehaviour
 
     public void EndGame()
     {
+        CarEngineSound.instance.StopEngineSound();
+
         TimeHandler.instance.StopTimer();
         Time.timeScale = 0f;
         endMenu.SetActive(true);
@@ -53,5 +56,11 @@ public class GameManager : MonoBehaviour
         Debug.Log("EndTime: " + time);
 
         timeText.text = "You finished " + allLaps + " laps in " + time + " seconds!";
+    }
+    IEnumerator EngineSound()
+    {
+        AudioManager.instance.Play("EngineStart");
+        yield return new WaitForSecondsRealtime(AudioManager.instance.GetClipLength("EngineStart") - 0.5f);
+        CarEngineSound.instance.PlayEngineSound();
     }
 }
