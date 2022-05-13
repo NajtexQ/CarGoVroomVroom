@@ -62,7 +62,7 @@ public class CarController : MonoBehaviour
     private void GetInput()
     {
         horizontalInput = Input.GetAxis("Horizontal");
-        // For some reason se vrtijo kolesa v napačno smer, zato "-"
+        // For some reason wheels are rotating in the wrong direction, thats why "-"
         verticalInput = -Input.GetAxis("Vertical");
         isBreaking = Input.GetKey(KeyCode.Space);
     }

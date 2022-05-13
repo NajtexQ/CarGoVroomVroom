@@ -18,7 +18,6 @@ public class GameListener : MonoBehaviour
             {
                 GameManager.instance.Pause();
             }
-        }
-        
+        }    
     }
 }
