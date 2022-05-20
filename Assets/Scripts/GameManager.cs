@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         StartCoroutine(EngineSound());
         Countdown.instance.StartCountdown();
+        TimeOfDay.instance.SetTimeOfDay();
     }
 
 
