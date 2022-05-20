@@ -15,7 +15,7 @@ RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
   m_Fog: 0
-  m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  m_FogColor: {r: 0, g: 0.57128024, b: 0.9245283, a: 1}
   m_FogMode: 3
   m_FogDensity: 0.01
   m_LinearFogStart: 0
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571328, b: 0.3069217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3302,6 +3302,7 @@ GameObject:
   - component: {fileID: 1446132755}
   - component: {fileID: 1446132757}
   - component: {fileID: 1446132756}
+  - component: {fileID: 1446132758}
   m_Layer: 3
   m_Name: Car
   m_TagString: Player
@@ -3486,6 +3487,19 @@ MonoBehaviour:
   engineSound: {fileID: 1446132756}
   constant: 1
   divider: 10
+--- !u!114 &1446132758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1446132751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65c8ac89ef495ae4aa04603765f592e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rain: {fileID: 20976680427583578, guid: 6c745ab69fb98ae4884bd0e12ac0340b, type: 3}
 --- !u!1 &1457890800
 GameObject:
   m_ObjectHideFlags: 0
