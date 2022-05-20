@@ -18,6 +18,11 @@ public class GameListener : MonoBehaviour
             {
                 GameManager.instance.Pause();
             }
-        }    
+        }
+
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            CameraSwitch.instance.SwitchCamera();
+        }
     }
 }
